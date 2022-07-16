@@ -2,8 +2,8 @@ import axios, { AxiosResponse } from 'axios';
 
 export default async function postRecaptcha(token: string) {
   try {
-    const { DOMAIN } = process.env;
-    const url: string = `${DOMAIN}/api/recaptcha`;
+    const { NEXT_PUBLIC_DOMAIN } = process.env;
+    const url: string = `${NEXT_PUBLIC_DOMAIN}/api/recaptcha`;
 
     const { data: { data } }: AxiosResponse = await axios.post(url, { token });
     return data;
