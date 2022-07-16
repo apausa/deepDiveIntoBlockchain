@@ -4,21 +4,19 @@ import React, {
 import { IResponse } from '../../lib/types';
 import postRecaptcha from './recaptcha.service';
 
-function Recaptcha() {
-  const { SITE_KEY } = process.env;
+function Recaptcha({ setIsHuman }: any) {
   const [token, setToken]: [string, Dispatch<SetStateAction<string>>] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { SITE_KEY } = process.env;
 
-  const onGetResponse: any = (event: any) => {
+  const onGetResponse = (event: any): void => {
     event.preventDefault();
-
     const response: string = grecaptcha.getResponse();
     setToken(response);
   };
 
-  const postResponse: any = async () => {
+  const postResponse = async (): Promise<void> => {
     const { success }: IResponse = await postRecaptcha(token);
-    console.log(success);
+    setIsHuman(success);
   };
 
   useEffect(() => { if (token) postResponse(); }, [token]);

@@ -21,7 +21,7 @@ function Home() {
       </Head>
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
       <main>
-        <Recaptcha />
+        <Recaptcha data={setIsHuman} />
       </main>
 
     </>
