@@ -29,7 +29,7 @@ function Verify({ isConnected, isHuman, setIsHuman }: {
     <div>
       <form>
         <div className="g-recaptcha" data-sitekey={`${SITE_KEY}`} />
-        {(!isHuman) ? (<div>You are not verified</div>) : null}
+        {(isConnected && !isHuman) ? (<div>You are not verified</div>) : null}
         {(isHuman) ? (<div>You are already verified</div>) : null}
         <button
           type="button"
