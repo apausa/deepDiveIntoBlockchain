@@ -18,17 +18,13 @@ function Connect({ isConnected, setIsConnected }: {
   isConnected: boolean,
   setIsConnected: Dispatch<SetStateAction<boolean>> }) {
   const hashconnect: HashConnect = new HashConnect();
-  const [key, setKey]: [string, Dispatch<SetStateAction<string>>] = useState('');
-  const [topic, setTopic]: [string, Dispatch<SetStateAction<string>>] = useState('');
-  const [pairing, setPairing]: [string, Dispatch<SetStateAction<string>>] = useState('');
   const [isFound, setIsFound]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
-  const connectWallet = () => {
-    console.log('key, topic and pairing', key, topic, pairing);
-
+  const connectWallet = (privKey: string, topic: string, pairingString: string) => {
+    hashconnect.connectToLocalWallet(pairingString);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
-        privKey: key, topic, pairingString: pairing, metadata, accountIds,
+        privKey, topic, pairingString, metadata, accountIds,
       };
 
       // Bug in jSON stringify
@@ -61,20 +57,9 @@ function Connect({ isConnected, setIsConnected }: {
       const state: any = await hashconnect.connect();
       const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
 
-      hashconnect.connectToLocalWallet(pairingString);
-
-      setKey(privKey);
-      setTopic(state.topic);
-      setPairing(pairingString);
+      connectWallet(privKey, state.topic, pairingString);
     }
-
-    findExtension();
   };
-
-  useEffect(() => {
-    console.log('pairing', pairing);
-    if (pairing) connectWallet();
-  }, [pairing]);
 
   return (
     <div className="my-4">
