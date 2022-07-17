@@ -18,6 +18,7 @@ function Connect({ isConnected, setIsConnected }: {
 }) {
   const hashconnect: HashConnect = new HashConnect();
   const [firstTimeData, setFirstTimeData]: [any, Dispatch<SetStateAction<any>>] = useState({});
+  const [isWallet, setIsWallet]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   const onGetKey = async (event: any): Promise<void> => {
     event.preventDefault();
@@ -39,7 +40,7 @@ function Connect({ isConnected, setIsConnected }: {
     }
   };
 
-  const connectWallet = () => {
+  const sendPairingEvent = () => {
     const { privKey, topic, pairingString } = firstTimeData;
 
     hashconnect.connectToLocalWallet(pairingString);
@@ -53,16 +54,18 @@ function Connect({ isConnected, setIsConnected }: {
     });
   };
 
-  useEffect(() => { connectWallet(); }, [firstTimeData]);
+  useEffect(() => { sendPairingEvent(); }, [firstTimeData]);
+  useEffect(() => {
+    hashconnect.foundExtensionEvent.once((walletMetadata) => {
+      if (walletMetadata) setIsWallet(true);
+    });
+  }, []);
 
   return (
     <div>
-      <button type="button" onClick={(event) => onGetKey(event)}>Connect wallet</button>
+      <button type="button" onClick={(event) => onGetKey(event)} disabled={!isWallet}>Connect wallet</button>
     </div>
   );
 }
 
 export default Connect;
-
-// @todo disable if hashconnect.foundExtensionEvent.once((walletMetadata) => {
-// @todo send to service?
