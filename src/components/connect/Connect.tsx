@@ -26,7 +26,6 @@ function Connect({ isConnected, setIsConnected }: {
   const connectWallet = () => {
     console.log('key, topic and pairing', key, topic, pairing);
 
-    hashconnect.connectToLocalWallet(pairing);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
         privKey: key, topic, pairingString: pairing, metadata, accountIds,
@@ -62,6 +61,8 @@ function Connect({ isConnected, setIsConnected }: {
       const state: any = await hashconnect.connect();
       const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
 
+      hashconnect.connectToLocalWallet(pairingString);
+
       setKey(privKey);
       setTopic(state.topic);
       setPairing(pairingString);
@@ -71,6 +72,7 @@ function Connect({ isConnected, setIsConnected }: {
   };
 
   useEffect(() => {
+    console.log('pairing', pairing);
     if (pairing) connectWallet();
   }, [pairing]);
 
