@@ -67,16 +67,20 @@ function Connect({ isConnected, setIsConnected }: {
   useEffect(() => { connectLibrary(); }, []);
 
   return (
-    <div className="d-flex justify-content-center my-4">
-      {(!isFound) ? (<div className="mb-2">Hashpack extension not found</div>) : null}
-      <button
-        type="button"
-        className={(isConnected) ? 'btn btn-success' : 'btn btn-primary'}
-        onClick={(event) => connectWallet(event)}
-        disabled={!isFound}
-      >
-        Connect wallet
-      </button>
+    <div className="my-4">
+      <div className="mb-2 d-flex justify-content-center fs-4 fw-bold">Step 1</div>
+      {(!isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension not found</div>) : null}
+      {(isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack found</div>) : null}
+      <div className="d-flex justify-content-center">
+        <button
+          type="button"
+          className={(isConnected) ? 'btn btn-success' : 'btn btn-secondary'}
+          onClick={(event) => connectWallet(event)}
+          disabled={!isFound}
+        >
+          Connect wallet
+        </button>
+      </div>
     </div>
   );
 }

@@ -27,12 +27,13 @@ function Verify({ isConnected, isHuman, setIsHuman }: {
 
   return (
     <div className="second my-4">
+      <div className="mb-2 d-flex justify-content-center fs-4 fw-bold">Step 2</div>
       <div className="g-recaptcha d-flex justify-content-center" data-sitekey={`${SITE_KEY}`} />
-      <div className="d-flex justify-content-center">
+      <div className="mt-2 d-flex justify-content-center">
         <button
           type="button"
           onClick={(event) => onGetResponse(event)}
-          className={(isHuman) ? 'btn btn-success' : 'btn btn-primary'}
+          className={(isHuman) ? 'btn btn-success' : 'btn btn-secondary'}
           disabled={!isConnected || isHuman}
         >
           Submit verfication
