@@ -1,52 +1,52 @@
-/* eslint-disable max-len */
 import React, {
-  Dispatch, SetStateAction,
+  Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
-import { HashConnect, HashConnectTypes } from 'hashconnect';
-import { IData } from './connect.types';
+import { HashConnect } from 'hashconnect';
+import APP_METADATA from './connect.constants';
+import { getItem } from '../../lib/utils/localStorage';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Connect({ setIsConnected }: { setIsConnected: Dispatch<SetStateAction<boolean>> }) {
   const hashconnect: HashConnect = new HashConnect();
-  const appMetadata: HashConnectTypes.AppMetadata = {
-    name: 'dApp Example',
-    description: 'An example hedera dApp',
-    icon: 'https://www.hashpack.app/img/logo.svg',
-  };
+  const [firstTimeData, setFirstTimeData]: [any, Dispatch<SetStateAction<any>>] = useState({});
 
-  const setItem = (name: string, data: IData): void => localStorage.setItem(name, JSON.stringify(data));
-  const getItem = (name: string): any => localStorage.getItem(name);
+  const firstTime = async () => {
+    const { privKey }: any = await hashconnect.init(APP_METADATA);
+    const state: any = await hashconnect.connect();
+    const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
+
+    setFirstTimeData({ privKey, topic: state.topic, pairingString });
+  };
 
   const onGetKey = async (event: any): Promise<void> => {
     event.preventDefault();
+
     const hashconnectRawData: any = getItem('hashconnectData');
+    const hashconnectData: any = JSON.parse(hashconnectRawData);
 
-    if (!hashconnectRawData) {
-      const { privKey } = await hashconnect.init(appMetadata);
-      const state = await hashconnect.connect();
-      const { topic } = state;
-      const pairingString = hashconnect.generatePairingString(state, 'testnet', true);
-
-      hashconnect.findLocalWallets();
-      hashconnect.foundExtensionEvent.once((walletMetadata) => {
-        console.log('walletMetadata', walletMetadata);
-        hashconnect.connectToLocalWallet(pairingString);
-        setItem('hashconnectData', {
-          privKey,
-          topic,
-          pairingString,
-          walletMetadata,
-        // pairedAccounts,
-        });
-        setIsConnected(true);
-      });
-    } else {
-      const { privKey, topic, pairedWalletData }: any = JSON.parse(hashconnectRawData);
-
-      await hashconnect.init(appMetadata, privKey);
-      await hashconnect.connect(topic, pairedWalletData);
-      setIsConnected(true);
-    }
+    if (hashconnectData) {
+      // Is connectWallet function neccessary on second time?
+      await hashconnect.init(APP_METADATA, hashconnectData.key);
+      await hashconnect.connect(hashconnectData.topic, hashconnectData.walletMetadata);
+    } else firstTime();
   };
+
+  // @important
+  const connectWallet = () => {
+    const { pairingString } = firstTimeData;
+
+    hashconnect.connectToLocalWallet(pairingString);
+    hashconnect.pairingEvent.once((pairingData) => {
+      // example
+      console.log(pairingData);
+      // setItem('hashconnectData', {
+      //   privKey, topic, pairingString,
+      // });
+      // setIsConnected(true);
+    });
+  };
+
+  useEffect(() => { connectWallet(); }, [firstTimeData]);
 
   return (
     <div>
