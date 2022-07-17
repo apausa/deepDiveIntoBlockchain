@@ -4,8 +4,9 @@ import React, {
 import { IResponse } from '../../lib/types';
 import postRecaptcha from './verify.service';
 
-function Verify({ isConnected, setIsHuman }: {
+function Verify({ isConnected, isHuman, setIsHuman }: {
   isConnected: boolean,
+  isHuman: boolean,
   setIsHuman: Dispatch<SetStateAction<boolean>>
 }) {
   const [token, setToken]: [string, Dispatch<SetStateAction<string>>] = useState('');
@@ -28,10 +29,12 @@ function Verify({ isConnected, setIsHuman }: {
     <div>
       <form>
         <div className="g-recaptcha" data-sitekey={`${SITE_KEY}`} />
+        {(!isHuman) ? (<div>You are not verified</div>) : null}
+        {(isHuman) ? (<div>You are already verified</div>) : null}
         <button
           type="button"
           onClick={(event) => onGetResponse(event)}
-          disabled={!isConnected}
+          disabled={!isConnected || isHuman}
         >
           Submit verfication
         </button>

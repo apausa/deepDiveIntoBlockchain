@@ -28,7 +28,7 @@ function Home() {
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
       <main>
         <Connect isConnected={isConnected} setIsConnected={setIsConnected} />
-        <Verify isConnected={isConnected} setIsHuman={setIsHuman} />
+        <Verify isConnected={isConnected} isHuman={isHuman} setIsHuman={setIsHuman} />
         <Mint isHuman={isHuman} />
       </main>
     </>
