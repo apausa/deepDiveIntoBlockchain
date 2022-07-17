@@ -21,20 +21,16 @@ function Connect({ isConnected, setIsConnected }: {
   const [pairing, setPairing]: [string, Dispatch<SetStateAction<string>>] = useState('');
   const [isFound, setIsFound]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
-  const connectWallet = (event: any) => {
-    event.preventDefault();
-
+  const connectWallet = () => {
     hashconnect.connectToLocalWallet(pairing);
-    console.log('isConnected', isConnected);
-    console.log('pairing', pairing);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
         privKey: key, topic, pairingString: pairing, metadata, accountIds,
       };
 
-      console.log('data', data);
       // Bug in jSON stringify
-      setItem('hashconnectData', data);
+      console.log('data', data);
+      setItem('hashconnectData', JSON.stringify(data));
       setIsConnected(true);
     });
   };
@@ -46,8 +42,9 @@ function Connect({ isConnected, setIsConnected }: {
     });
   };
 
-  const connectLibrary = async (): Promise<void> => {
-    console.log('isConnected', isConnected);
+  const connectLibrary = async (event: any) => {
+    event.preventDefault();
+
     const hashconnectRawData: any = getItem('hashconnectData');
     const hashconnectData: IData = JSON.parse(hashconnectRawData);
 
@@ -69,7 +66,7 @@ function Connect({ isConnected, setIsConnected }: {
     findExtension();
   };
 
-  useEffect(() => { connectLibrary(); }, []);
+  useEffect(() => { connectWallet(); }, [pairing]);
 
   return (
     <div className="my-4">
@@ -80,7 +77,7 @@ function Connect({ isConnected, setIsConnected }: {
         <button
           type="button"
           className={(isConnected) ? 'btn btn-success' : 'btn btn-secondary'}
-          onClick={(event) => connectWallet(event)}
+          onClick={(event) => connectLibrary(event)}
           disabled={!isFound || isConnected}
         >
           Connect wallet
