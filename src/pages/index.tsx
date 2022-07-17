@@ -2,10 +2,13 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import Head from 'next/head';
 
 import Script from 'next/script';
-import Recaptcha from '../components/recaptcha/Recaptcha';
+import Verify from '../components/verify/Verify';
+import Connect from '../components/connect/Connect';
+import Mint from '../components/mint/Mint';
 
 function Home() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, max-len
+  const [isConnected, setIsConnected]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
   const [isHuman, setIsHuman]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   return (
@@ -21,7 +24,9 @@ function Home() {
       </Head>
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
       <main>
-        <Recaptcha data={setIsHuman} />
+        <Connect setIsConnected={setIsConnected} />
+        <Verify setIsHuman={setIsHuman} isConnected={isConnected} />
+        <Mint isHuman={isHuman} />
       </main>
 
     </>

@@ -2,9 +2,11 @@ import React, {
   Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
 import { IResponse } from '../../lib/types';
-import postRecaptcha from './recaptcha.service';
+import postRecaptcha from './verify.service';
 
-function Recaptcha({ setIsHuman }: any) {
+function Verify({ setIsHuman, isConnected }: {
+  setIsHuman: Dispatch<SetStateAction<boolean>>, isConnected: boolean
+}) {
   const [token, setToken]: [string, Dispatch<SetStateAction<string>>] = useState('');
   const { SITE_KEY } = process.env;
 
@@ -28,12 +30,13 @@ function Recaptcha({ setIsHuman }: any) {
         <button
           type="button"
           onClick={(event) => onGetResponse(event)}
+          disabled={!isConnected}
         >
-          Submit
+          Submit verfication
         </button>
       </form>
     </div>
   );
 }
 
-export default Recaptcha;
+export default Verify;
