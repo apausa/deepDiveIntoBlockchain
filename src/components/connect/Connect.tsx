@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, {
-  Dispatch, SetStateAction, useEffect, useState,
+  Dispatch, SetStateAction,
 } from 'react';
 import { HashConnect, MessageTypes } from 'hashconnect';
 
