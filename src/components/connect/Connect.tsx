@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable max-len */
 import React, {
   Dispatch, SetStateAction, useEffect, useState,
@@ -18,13 +17,18 @@ function Connect({ isConnected, setIsConnected }: {
   isConnected: boolean,
   setIsConnected: Dispatch<SetStateAction<boolean>> }) {
   const hashconnect: HashConnect = new HashConnect();
+  const [key, setKey]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [topic, setTopic]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [pairing, setPairing]: [string, Dispatch<SetStateAction<string>>] = useState('');
   const [isFound, setIsFound]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
-  const connectWallet = (privKey: string, topic: string, pairingString: string) => {
-    hashconnect.connectToLocalWallet(pairingString);
+  const connectWallet = (event: any) => {
+    event.preventDefault();
+
+    hashconnect.connectToLocalWallet(pairing);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
-        privKey, topic, pairingString, metadata, accountIds,
+        privKey: key, topic, pairingString: pairing, metadata, accountIds,
       };
 
       // Bug in jSON stringify
@@ -41,9 +45,7 @@ function Connect({ isConnected, setIsConnected }: {
     });
   };
 
-  const connectLibrary = async (event: any) => {
-    event.preventDefault();
-
+  const connectLibrary = async () => {
     const hashconnectRawData: any = getItem('hashconnectData');
     const hashconnectData: IData = JSON.parse(hashconnectRawData);
 
@@ -57,19 +59,26 @@ function Connect({ isConnected, setIsConnected }: {
       const state: any = await hashconnect.connect();
       const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
 
-      connectWallet(privKey, state.topic, pairingString);
+      setKey(privKey);
+      setTopic(state.topic);
+      setPairing(pairingString);
     }
+
+    findExtension();
   };
+
+  useEffect(() => { connectLibrary(); }, []);
 
   return (
     <div className="my-4">
       <div className="mb-2 d-flex justify-content-center fs-4 fw-bold">Step 1</div>
-
+      { (!isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension not found</div>) : null }
+      { (isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension found</div>) : null }
       <div className="d-flex justify-content-center">
         <button
           type="button"
           className={(isConnected) ? 'btn btn-success' : 'btn btn-secondary'}
-          onClick={(event) => connectLibrary(event)}
+          onClick={(event) => connectWallet(event)}
           disabled={isConnected}
         >
           Connect wallet
@@ -80,6 +89,3 @@ function Connect({ isConnected, setIsConnected }: {
 }
 
 export default Connect;
-
-// { (!isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension not found</div>) : null; }
-// { (isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension found</div>) : null; }
