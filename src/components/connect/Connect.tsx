@@ -70,7 +70,10 @@ function Connect({ isConnected, setIsConnected }: {
     findExtension();
   };
 
-  useEffect(() => { connectWallet(); }, [pairing]);
+  useEffect(() => {
+    console.log(pairing);
+    connectWallet();
+  }, [pairing]);
 
   return (
     <div className="my-4">
