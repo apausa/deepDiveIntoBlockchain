@@ -68,6 +68,7 @@ function Connect({ isConnected, setIsConnected }: {
 
   return (
     <div className="d-flex justify-content-center my-4">
+      {(!isFound) ? (<div className="mb-2">Hashpack extension not found</div>) : null}
       <button
         type="button"
         className={(isConnected) ? 'btn btn-success' : 'btn btn-primary'}
@@ -81,8 +82,3 @@ function Connect({ isConnected, setIsConnected }: {
 }
 
 export default Connect;
-
-/*
-      {(!isFound) ? (<div>Browser extension not found</div>) : null}
-      {(isConnected) ? (<div>You are already connected</div>) : null}
-      */
