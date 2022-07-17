@@ -56,6 +56,7 @@ function Connect({ isConnected, setIsConnected }: {
 
   useEffect(() => { sendPairingEvent(); }, [firstTimeData]);
   useEffect(() => {
+    hashconnect.findLocalWallets();
     hashconnect.foundExtensionEvent.once((walletMetadata) => {
       if (walletMetadata) setIsWallet(true);
     });
