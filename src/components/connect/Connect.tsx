@@ -68,9 +68,8 @@ function Connect({ isConnected, setIsConnected }: {
 
   return (
     <div>
-      {(!isFound) ? (
-        <div>Browser extension not found</div>
-      ) : null}
+      {(!isFound) ? (<div>Browser extension not found</div>) : null}
+      {(isConnected) ? (<div>You are already connected</div>) : null}
       <button
         type="button"
         onClick={(event) => connectWallet(event)}
