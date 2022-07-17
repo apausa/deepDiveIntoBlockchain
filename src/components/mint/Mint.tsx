@@ -2,8 +2,17 @@ import React from 'react';
 
 function Mint({ isHuman }: { isHuman: boolean }) {
   return (
-    <div>
-      <button type="button" disabled={!isHuman}>Mint token</button>
+    <div className="third my-4">
+      <div className="d-flex justify-content-center my-2">
+        <button
+          type="button"
+          className="btn btn-primary my-2"
+          disabled={!isHuman}
+        >
+          Mint token
+
+        </button>
+      </div>
     </div>
   );
 }

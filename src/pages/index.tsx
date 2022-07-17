@@ -26,7 +26,7 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
-      <main>
+      <main className="container shadow rounded position-absolute top-50 start-50 translate-middle">
         <Connect isConnected={isConnected} setIsConnected={setIsConnected} />
         <Verify isConnected={isConnected} isHuman={isHuman} setIsHuman={setIsHuman} />
         <Mint isHuman={isHuman} />

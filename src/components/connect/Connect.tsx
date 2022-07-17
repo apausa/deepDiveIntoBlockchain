@@ -67,11 +67,10 @@ function Connect({ isConnected, setIsConnected }: {
   useEffect(() => { connectLibrary(); }, []);
 
   return (
-    <div>
-      {(!isFound) ? (<div>Browser extension not found</div>) : null}
-      {(isConnected) ? (<div>You are already connected</div>) : null}
+    <div className="d-flex justify-content-center my-4">
       <button
         type="button"
+        className="btn btn-primary"
         onClick={(event) => connectWallet(event)}
         disabled={isConnected || !isFound}
       >
@@ -82,3 +81,8 @@ function Connect({ isConnected, setIsConnected }: {
 }
 
 export default Connect;
+
+/*
+      {(!isFound) ? (<div>Browser extension not found</div>) : null}
+      {(isConnected) ? (<div>You are already connected</div>) : null}
+      */

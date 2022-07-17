@@ -26,21 +26,26 @@ function Verify({ isConnected, isHuman, setIsHuman }: {
   useEffect(() => { if (token) postResponse(); }, [token]);
 
   return (
-    <div>
-      <form>
-        <div className="g-recaptcha" data-sitekey={`${SITE_KEY}`} />
-        {(isConnected && !isHuman) ? (<div>You are not verified</div>) : null}
-        {(isHuman) ? (<div>You are already verified</div>) : null}
+    <div className="second my-4">
+      <div className="g-recaptcha d-flex justify-content-center" data-sitekey={`${SITE_KEY}`} />
+      <div className="d-flex justify-content-center">
         <button
           type="button"
           onClick={(event) => onGetResponse(event)}
           disabled={!isConnected || isHuman}
+          className="btn btn-primary"
         >
           Submit verfication
         </button>
-      </form>
+      </div>
     </div>
   );
 }
 
 export default Verify;
+
+/*
+
+        {(isConnected && !isHuman) ? (<div>You are not verified</div>) : null}
+        {(isHuman) ? (<div>You are already verified</div>) : null}
+        */
