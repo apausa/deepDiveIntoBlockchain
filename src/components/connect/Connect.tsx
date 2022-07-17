@@ -14,19 +14,43 @@ import APP_METADATA from './connect.constants';
 
 function Connect({ isConnected, setIsConnected }: {
   isConnected: boolean,
-  setIsConnected: Dispatch<SetStateAction<boolean>>
-}) {
+  setIsConnected: Dispatch<SetStateAction<boolean>> }) {
   const hashconnect: HashConnect = new HashConnect();
-  const [firstTimeData, setFirstTimeData]: [any, Dispatch<SetStateAction<any>>] = useState({});
-  const [isWallet, setIsWallet]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+  const [key, setKey]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [topic, setTopic]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [pairing, setPairing]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [isFound, setIsFound]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
-  const onGetKey = async (event: any): Promise<void> => {
+  const connectWallet = () => {
+    hashconnect.connectToLocalWallet(pairing);
+    hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
+      const data: IData = {
+        privKey: key, topic, pairingString: pairing, metadata, accountIds,
+      };
+
+      setItem('hashconnectData', JSON.stringify(data));
+      setIsConnected(true);
+    });
+  };
+
+  const onSubmit = (event: any) => {
     event.preventDefault();
 
+    if (isFound) connectWallet();
+  };
+
+  const findExtension = () => {
+    hashconnect.findLocalWallets();
+    hashconnect.foundExtensionEvent.once((walletMetadata) => {
+      if (walletMetadata) setIsFound(true);
+    });
+  };
+
+  const connectLibrary = async (): Promise<void> => {
     const hashconnectRawData: any = getItem('hashconnectData');
     const hashconnectData: IData = JSON.parse(hashconnectRawData);
 
-    if (isConnected) {
+    if (hashconnectData) {
       await hashconnect.init(APP_METADATA, hashconnectData.privKey);
       await hashconnect.connect(hashconnectData.topic, hashconnectData.metadata);
 
@@ -36,35 +60,28 @@ function Connect({ isConnected, setIsConnected }: {
       const state: any = await hashconnect.connect();
       const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
 
-      setFirstTimeData({ privKey, topic: state.topic, pairingString });
+      setKey(privKey);
+      setTopic(state.topic);
+      setPairing(pairingString);
     }
+
+    findExtension();
   };
 
-  const sendPairingEvent = () => {
-    const { privKey, topic, pairingString } = firstTimeData;
-
-    hashconnect.connectToLocalWallet(pairingString);
-    hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
-      const data: IData = {
-        privKey, topic, pairingString, metadata, accountIds,
-      };
-
-      setItem('hashconnectData', JSON.stringify(data));
-      setIsConnected(true);
-    });
-  };
-
-  useEffect(() => { sendPairingEvent(); }, [firstTimeData]);
-  useEffect(() => {
-    hashconnect.findLocalWallets();
-    hashconnect.foundExtensionEvent.once((walletMetadata) => {
-      if (walletMetadata) setIsWallet(true);
-    });
-  }, []);
+  useEffect(() => { connectLibrary(); }, []);
 
   return (
     <div>
-      <button type="button" onClick={(event) => onGetKey(event)} disabled={!isWallet}>Connect wallet</button>
+      {(!isFound) ? (
+        <div>Browser extension not found</div>
+      ) : null}
+      <button
+        type="button"
+        onClick={(event) => onSubmit(event)}
+        disabled={isConnected || !isFound}
+      >
+        Connect wallet
+      </button>
     </div>
   );
 }
