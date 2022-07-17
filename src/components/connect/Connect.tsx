@@ -26,8 +26,6 @@ function Connect({ isConnected, setIsConnected }: {
         privKey, topic, pairingString, metadata, accountIds,
       };
 
-      // Bug in jSON stringify
-      console.log('data', data);
       setItem('hashconnectData', JSON.stringify(data));
       setIsConnected(true);
     });
