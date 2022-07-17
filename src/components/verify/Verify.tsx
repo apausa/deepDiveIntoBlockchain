@@ -32,8 +32,8 @@ function Verify({ isConnected, isHuman, setIsHuman }: {
         <button
           type="button"
           onClick={(event) => onGetResponse(event)}
+          className={(isHuman) ? 'btn btn-success' : 'btn btn-primary'}
           disabled={!isConnected || isHuman}
-          className="btn btn-primary"
         >
           Submit verfication
         </button>
@@ -43,9 +43,3 @@ function Verify({ isConnected, isHuman, setIsHuman }: {
 }
 
 export default Verify;
-
-/*
-
-        {(isConnected && !isHuman) ? (<div>You are not verified</div>) : null}
-        {(isHuman) ? (<div>You are already verified</div>) : null}
-        */

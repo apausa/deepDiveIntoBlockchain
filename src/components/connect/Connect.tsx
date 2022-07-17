@@ -70,9 +70,9 @@ function Connect({ isConnected, setIsConnected }: {
     <div className="d-flex justify-content-center my-4">
       <button
         type="button"
-        className="btn btn-primary"
+        className={(isConnected) ? 'btn btn-success' : 'btn btn-primary'}
         onClick={(event) => connectWallet(event)}
-        disabled={isConnected || !isFound}
+        disabled={!isFound}
       >
         Connect wallet
       </button>

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function Mint({ isHuman }: { isHuman: boolean }) {
   return (
     <div className="third my-4">
@@ -7,7 +8,7 @@ function Mint({ isHuman }: { isHuman: boolean }) {
         <button
           type="button"
           className="btn btn-primary my-2"
-          disabled={!isHuman}
+          disabled
         >
           Mint token
 
