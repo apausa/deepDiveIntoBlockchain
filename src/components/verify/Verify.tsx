@@ -4,8 +4,8 @@ import React, {
 import { IResponse } from '../../lib/types';
 import postRecaptcha from './verify.service';
 
-function Verify({ setIsHuman, isConnected }: {
-  setIsHuman: Dispatch<SetStateAction<boolean>>, isConnected: boolean
+function Verify({ setIsHuman }: {
+  setIsHuman: Dispatch<SetStateAction<boolean>>
 }) {
   const [token, setToken]: [string, Dispatch<SetStateAction<string>>] = useState('');
   const { SITE_KEY } = process.env;
@@ -30,7 +30,6 @@ function Verify({ setIsHuman, isConnected }: {
         <button
           type="button"
           onClick={(event) => onGetResponse(event)}
-          disabled={!isConnected}
         >
           Submit verfication
         </button>

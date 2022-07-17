@@ -1,12 +1,12 @@
 import React, {
   Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
-import { HashConnect } from 'hashconnect';
+import { HashConnect, MessageTypes } from 'hashconnect';
 import APP_METADATA from './connect.constants';
-import { getItem } from '../../lib/utils/localStorage';
+import { getItem, setItem } from '../../lib/utils/localStorage';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Connect({ setIsConnected }: { setIsConnected: Dispatch<SetStateAction<boolean>> }) {
+function Connect() {
   const hashconnect: HashConnect = new HashConnect();
   const [firstTimeData, setFirstTimeData]: [any, Dispatch<SetStateAction<any>>] = useState({});
 
@@ -25,24 +25,19 @@ function Connect({ setIsConnected }: { setIsConnected: Dispatch<SetStateAction<b
     const hashconnectData: any = JSON.parse(hashconnectRawData);
 
     if (hashconnectData) {
-      // Is connectWallet function neccessary on second time?
       await hashconnect.init(APP_METADATA, hashconnectData.key);
-      await hashconnect.connect(hashconnectData.topic, hashconnectData.walletMetadata);
+      await hashconnect.connect(hashconnectData.topic, hashconnectData.metadata);
     } else firstTime();
   };
 
-  // @important
   const connectWallet = () => {
-    const { pairingString } = firstTimeData;
+    const { privKey, topic, pairingString } = firstTimeData;
 
     hashconnect.connectToLocalWallet(pairingString);
-    hashconnect.pairingEvent.once((pairingData) => {
-      // example
-      console.log(pairingData);
-      // setItem('hashconnectData', {
-      //   privKey, topic, pairingString,
-      // });
-      // setIsConnected(true);
+    hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
+      setItem('hashconnectData', {
+        privKey, topic, pairingString, metadata, accountIds,
+      });
     });
   };
 
@@ -56,3 +51,6 @@ function Connect({ setIsConnected }: { setIsConnected: Dispatch<SetStateAction<b
 }
 
 export default Connect;
+
+// @todo disable if hashconnect.foundExtensionEvent.once((walletMetadata) => {
+// @todo send to service?

@@ -4,8 +4,8 @@ export interface IData {
   topic: string,
   pairingString: string,
   privKey: string,
-  walletMetadata: HashConnectTypes.WalletMetadata,
-  pairedAccounts?: any[], // @todo
+  metadata: HashConnectTypes.WalletMetadata,
+  accountIds: string[],
 }
 
 export interface IFirstTimeData {
