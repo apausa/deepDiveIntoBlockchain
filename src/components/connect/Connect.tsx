@@ -26,15 +26,19 @@ function Connect({ setIsConnected }: { setIsConnected: Dispatch<SetStateAction<b
       const { topic } = state;
       const pairingString = hashconnect.generatePairingString(state, 'testnet', true);
 
-      setItem('hashconnectData', {
-        privKey,
-        topic,
-        pairingString,
-        // pairedWalletData,
-        // pairedAccounts,
-      });
       hashconnect.findLocalWallets();
-      setIsConnected(true);
+      hashconnect.foundExtensionEvent.once((walletMetadata) => {
+        console.log('walletMetadata', walletMetadata);
+        hashconnect.connectToLocalWallet(pairingString);
+        setItem('hashconnectData', {
+          privKey,
+          topic,
+          pairingString,
+          walletMetadata,
+        // pairedAccounts,
+        });
+        setIsConnected(true);
+      });
     } else {
       const { privKey, topic, pairedWalletData }: any = JSON.parse(hashconnectRawData);
 

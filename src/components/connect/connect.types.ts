@@ -2,6 +2,6 @@ export interface IData {
   topic: string,
   pairingString: string,
   privKey: string,
-  pairedWalletData?: any, // @todo
+  walletMetadata?: any, // @todo
   pairedAccounts?: any[], // @todo
 }
