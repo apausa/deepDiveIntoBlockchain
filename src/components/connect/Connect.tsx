@@ -21,7 +21,9 @@ function Connect({ isConnected, setIsConnected }: {
   const [pairing, setPairing]: [string, Dispatch<SetStateAction<string>>] = useState('');
   const [isFound, setIsFound]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
-  const connectWallet = () => {
+  const connectWallet = (event: any) => {
+    event.preventDefault();
+
     hashconnect.connectToLocalWallet(pairing);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
@@ -31,12 +33,6 @@ function Connect({ isConnected, setIsConnected }: {
       setItem('hashconnectData', JSON.stringify(data));
       setIsConnected(true);
     });
-  };
-
-  const onSubmit = (event: any) => {
-    event.preventDefault();
-
-    if (isFound) connectWallet();
   };
 
   const findExtension = () => {
@@ -77,7 +73,7 @@ function Connect({ isConnected, setIsConnected }: {
       ) : null}
       <button
         type="button"
-        onClick={(event) => onSubmit(event)}
+        onClick={(event) => connectWallet(event)}
         disabled={isConnected || !isFound}
       >
         Connect wallet
