@@ -17,15 +17,13 @@ function Connect({ isConnected, setIsConnected }: {
   isConnected: boolean,
   setIsConnected: Dispatch<SetStateAction<boolean>> }) {
   const hashconnect: HashConnect = new HashConnect();
-  const [key, setKey]: [string, Dispatch<SetStateAction<string>>] = useState('');
-  const [topic, setTopic]: [string, Dispatch<SetStateAction<string>>] = useState('');
-  const [pairing, setPairing]: [string, Dispatch<SetStateAction<string>>] = useState('');
 
-  const connectWallet = () => {
-    hashconnect.connectToLocalWallet(pairing);
+  const connectWallet = (privKey: string, topic: string, pairingString: string) => {
+    hashconnect.connectToLocalWallet(pairingString);
+
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
-        privKey: key, topic, pairingString: pairing, metadata, accountIds,
+        privKey, topic, pairingString, metadata, accountIds,
       };
 
       // Bug in jSON stringify
@@ -51,13 +49,9 @@ function Connect({ isConnected, setIsConnected }: {
       const state: any = await hashconnect.connect();
       const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
 
-      setKey(privKey);
-      setTopic(state.topic);
-      setPairing(pairingString);
+      connectWallet(privKey, state.topic, pairingString);
     }
   };
-
-  useEffect(() => { if (pairing) connectWallet(); }, [pairing]);
 
   return (
     <div className="my-4">
@@ -77,6 +71,3 @@ function Connect({ isConnected, setIsConnected }: {
 }
 
 export default Connect;
-
-// { (!isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension not found</div>) : null }
-// { (isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension found</div>) : null }
