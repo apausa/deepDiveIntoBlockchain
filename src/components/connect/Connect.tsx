@@ -25,11 +25,13 @@ function Connect({ isConnected, setIsConnected }: {
     event.preventDefault();
 
     hashconnect.connectToLocalWallet(pairing);
+    console.log('pairing', pairing);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
         privKey: key, topic, pairingString: pairing, metadata, accountIds,
       };
 
+      console.log('data', data);
       // Bug in jSON stringify
       setItem('hashconnectData', JSON.stringify(data));
       setIsConnected(true);
