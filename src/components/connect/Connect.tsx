@@ -71,8 +71,7 @@ function Connect({ isConnected, setIsConnected }: {
   };
 
   useEffect(() => {
-    console.log('pairing', pairing);
-    connectWallet();
+    if (pairing) connectWallet();
   }, [pairing]);
 
   return (
