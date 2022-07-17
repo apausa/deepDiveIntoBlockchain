@@ -25,6 +25,7 @@ function Connect({ isConnected, setIsConnected }: {
     event.preventDefault();
 
     hashconnect.connectToLocalWallet(pairing);
+    console.log('isConnected', isConnected);
     console.log('pairing', pairing);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
@@ -33,7 +34,7 @@ function Connect({ isConnected, setIsConnected }: {
 
       console.log('data', data);
       // Bug in jSON stringify
-      setItem('hashconnectData', JSON.stringify(data));
+      setItem('hashconnectData', data);
       setIsConnected(true);
     });
   };
@@ -46,6 +47,7 @@ function Connect({ isConnected, setIsConnected }: {
   };
 
   const connectLibrary = async (): Promise<void> => {
+    console.log('isConnected', isConnected);
     const hashconnectRawData: any = getItem('hashconnectData');
     const hashconnectData: IData = JSON.parse(hashconnectRawData);
 
