@@ -24,6 +24,8 @@ function Connect({ isConnected, setIsConnected }: {
   const [isFound, setIsFound]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   const connectWallet = () => {
+    console.log(key, topic, pairing);
+
     hashconnect.connectToLocalWallet(pairing);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
       const data: IData = {
