@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, {
   Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
@@ -71,14 +72,13 @@ function Connect({ isConnected, setIsConnected }: {
   return (
     <div className="my-4">
       <div className="mb-2 d-flex justify-content-center fs-4 fw-bold">Step 1</div>
-      {(!isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension not found</div>) : null}
-      {(isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension found</div>) : null}
+
       <div className="d-flex justify-content-center">
         <button
           type="button"
           className={(isConnected) ? 'btn btn-success' : 'btn btn-secondary'}
           onClick={(event) => connectLibrary(event)}
-          disabled={!isFound || isConnected}
+          disabled={isConnected}
         >
           Connect wallet
         </button>
@@ -88,3 +88,6 @@ function Connect({ isConnected, setIsConnected }: {
 }
 
 export default Connect;
+
+// { (!isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension not found</div>) : null; }
+// { (isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension found</div>) : null; }
