@@ -70,13 +70,13 @@ function Connect({ isConnected, setIsConnected }: {
     <div className="my-4">
       <div className="mb-2 d-flex justify-content-center fs-4 fw-bold">Step 1</div>
       {(!isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension not found</div>) : null}
-      {(isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack found</div>) : null}
+      {(isFound) ? (<div className="mb-2 d-flex justify-content-center">Hashpack extension found</div>) : null}
       <div className="d-flex justify-content-center">
         <button
           type="button"
           className={(isConnected) ? 'btn btn-success' : 'btn btn-secondary'}
           onClick={(event) => connectWallet(event)}
-          disabled={!isFound}
+          disabled={!isFound || isConnected}
         >
           Connect wallet
         </button>
