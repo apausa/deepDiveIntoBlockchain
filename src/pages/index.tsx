@@ -1,14 +1,17 @@
+/* eslint-disable max-len */
 import React, {
   Dispatch, SetStateAction, useState,
 } from 'react';
 import Head from 'next/head';
-
 import Script from 'next/script';
+
+// Components
 import Verify from '../components/verify/Verify';
 import Connect from '../components/connect/Connect';
 import Mint from '../components/mint/Mint';
 
 function Home() {
+  const [isConnected, setIsConnected]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
   const [isHuman, setIsHuman]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   return (
@@ -24,11 +27,10 @@ function Home() {
       </Head>
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
       <main>
-        <Connect />
-        <Verify setIsHuman={setIsHuman} />
+        <Connect isConnected={isConnected} setIsConnected={setIsConnected} />
+        <Verify isConnected={isConnected} setIsHuman={setIsHuman} />
         <Mint isHuman={isHuman} />
       </main>
-
     </>
   );
 }

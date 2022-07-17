@@ -2,32 +2,41 @@ import React, {
   Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
 import { HashConnect, MessageTypes } from 'hashconnect';
-import APP_METADATA from './connect.constants';
+
+// Utils
 import { getItem, setItem } from '../../lib/utils/localStorage';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function Connect() {
+// Types
+import { IData } from '../../lib/types';
+
+// Constants
+import APP_METADATA from './connect.constants';
+
+function Connect({ isConnected, setIsConnected }: {
+  isConnected: boolean,
+  setIsConnected: Dispatch<SetStateAction<boolean>>
+}) {
   const hashconnect: HashConnect = new HashConnect();
   const [firstTimeData, setFirstTimeData]: [any, Dispatch<SetStateAction<any>>] = useState({});
-
-  const firstTime = async () => {
-    const { privKey }: any = await hashconnect.init(APP_METADATA);
-    const state: any = await hashconnect.connect();
-    const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
-
-    setFirstTimeData({ privKey, topic: state.topic, pairingString });
-  };
 
   const onGetKey = async (event: any): Promise<void> => {
     event.preventDefault();
 
     const hashconnectRawData: any = getItem('hashconnectData');
-    const hashconnectData: any = JSON.parse(hashconnectRawData);
+    const hashconnectData: IData = JSON.parse(hashconnectRawData);
 
-    if (hashconnectData) {
-      await hashconnect.init(APP_METADATA, hashconnectData.key);
+    if (isConnected) {
+      await hashconnect.init(APP_METADATA, hashconnectData.privKey);
       await hashconnect.connect(hashconnectData.topic, hashconnectData.metadata);
-    } else firstTime();
+
+      setIsConnected(true);
+    } else {
+      const { privKey }: any = await hashconnect.init(APP_METADATA);
+      const state: any = await hashconnect.connect();
+      const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
+
+      setFirstTimeData({ privKey, topic: state.topic, pairingString });
+    }
   };
 
   const connectWallet = () => {
@@ -35,9 +44,12 @@ function Connect() {
 
     hashconnect.connectToLocalWallet(pairingString);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
-      setItem('hashconnectData', {
+      const data: IData = {
         privKey, topic, pairingString, metadata, accountIds,
-      });
+      };
+
+      setItem('hashconnectData', JSON.stringify(data));
+      setIsConnected(true);
     });
   };
 
