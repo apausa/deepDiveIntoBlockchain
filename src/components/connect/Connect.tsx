@@ -24,7 +24,7 @@ function Connect({ isConnected, setIsConnected }: {
   const [isFound, setIsFound]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   const connectWallet = () => {
-    console.log(key, topic, pairing);
+    console.log('key, topic and pairing', key, topic, pairing);
 
     hashconnect.connectToLocalWallet(pairing);
     hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
@@ -71,7 +71,7 @@ function Connect({ isConnected, setIsConnected }: {
   };
 
   useEffect(() => {
-    console.log(pairing);
+    console.log('pairing', pairing);
     connectWallet();
   }, [pairing]);
 
