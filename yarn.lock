@@ -91,7 +91,7 @@
     long "^4.0.0"
     protobufjs "^6.11.2"
 
-"@hashgraph/sdk@^2.14.2":
+"@hashgraph/sdk@^2.14.2", "@hashgraph/sdk@^2.16.6":
   version "2.16.6"
   resolved "https://registry.yarnpkg.com/@hashgraph/sdk/-/sdk-2.16.6.tgz#379e4ef540a03bab5decf328dd4475b7d93adf1f"
   integrity sha512-cfIGOTf9cReP3l+w3P/cinnlmlGTyCt5TdmNpeWXJc5zrWimK2TJra6WDcfC8hzMFKOV0qI2Ka1YJk54hR8Yfg==
@@ -764,6 +764,11 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
+
+dotenv@^16.0.1:
+  version "16.0.1"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.0.1.tgz#8f8f9d94876c35dac989876a5d3a82a267fdce1d"
+  integrity sha512-1K6hR6wtk2FviQ4kEiSjFiH5rpzEVi8WW0x96aztHVMhEspNpc4DVOUTEHtEva5VThQ8IaBX1Pe4gSzpVVUsKQ==
 
 elliptic@^6.5.4:
   version "6.5.4"
