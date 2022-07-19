@@ -31,6 +31,7 @@ function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsCo
     event.preventDefault();
 
     const hashconnectRawData: any = await getItem('hashconnectData');
+    console.log('debug', hashconnectRawData);
     const hashconnectData: IData = await JSON.parse(hashconnectRawData);
 
     if (hashconnectData) {
