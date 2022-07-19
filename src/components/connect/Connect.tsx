@@ -36,7 +36,7 @@ function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsCo
     if (hashconnectData) {
       await hashconnect.init(APP_METADATA, hashconnectData.privKey);
       await hashconnect.connect(hashconnectData.topic, hashconnectData.metadata);
-      console.log('debug', hashconnectData.accountIds[0]);
+      console.log('debug', hashconnectData);
       setIsConnected(hashconnectData.accountIds[0]);
     } else {
       const { privKey }: any = await hashconnect.init(APP_METADATA);
