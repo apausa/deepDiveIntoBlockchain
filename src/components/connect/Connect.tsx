@@ -32,7 +32,8 @@ function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsCo
 
     const hashconnectRawData: any = await getItem('hashconnectData');
     console.log('debug', hashconnectRawData);
-    const hashconnectData: IData = await JSON.parse(hashconnectRawData);
+    let hashconnectData = await JSON.parse(hashconnectRawData);
+    hashconnectData = await JSON.parse(hashconnectData);
 
     if (hashconnectData) {
       await hashconnect.init(APP_METADATA, hashconnectData.privKey);
