@@ -49,15 +49,14 @@ function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsCo
 
   return (
     <div className="my-4">
-      {/* <div className="mb-2 d-flex justify-content-center fs-4 fw-bold">Step 1</div> */}
       <div className="d-flex justify-content-center">
         <button
           type="button"
-          className={(isConnected) ? 'btn btn-success' : 'btn btn-secondary'}
+          className={(isConnected) ? 'btn btn-success' : 'btn btn-outline-primary'}
           onClick={(event) => connectLibrary(event)}
           disabled={!!isConnected}
         >
-          Connect wallet
+          Connect with Hashpack wallet
         </button>
       </div>
       {(isConnected) ? (

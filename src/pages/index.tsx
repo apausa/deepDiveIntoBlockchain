@@ -23,7 +23,7 @@ function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
-      <main className="container shadow rounded position-absolute top-50 start-50 translate-middle">
+      <main className="position-absolute top-50 start-50 translate-middle">
         <Connect isConnected={isConnected} setIsConnected={setIsConnected} />
       </main>
     </>
