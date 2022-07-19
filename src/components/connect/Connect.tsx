@@ -30,8 +30,8 @@ function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsCo
   const connectLibrary = async (event: any) => {
     event.preventDefault();
 
-    const hashconnectRawData: any = getItem('hashconnectData');
-    const hashconnectData: IData = JSON.parse(hashconnectRawData);
+    const hashconnectRawData: any = await getItem('hashconnectData');
+    const hashconnectData: IData = await JSON.parse(hashconnectRawData);
 
     if (hashconnectData) {
       await hashconnect.init(APP_METADATA, hashconnectData.privKey);
