@@ -8,7 +8,7 @@ import { getItem, setItem } from '../../lib/utils/localStorage';
 import { IData } from '../../lib/types';
 
 // Constants
-import APP_METADATA from './connect.constants';
+import APP_METADATA from '../../lib/constants.ts';
 
 // eslint-disable-next-line max-len
 function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsConnected: Dispatch<SetStateAction<string>> }) {
