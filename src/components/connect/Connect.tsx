@@ -60,7 +60,7 @@ function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsCo
         </button>
       </div>
       {(isConnected) ? (
-        <div className="mt-2 d-flex justify-content-center">
+        <div className="mt-2 d-flex justify-content-center font-weight-bold">
           Wallet ID:
           {' '}
           {isConnected}
