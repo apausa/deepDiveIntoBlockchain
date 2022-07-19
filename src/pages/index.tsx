@@ -6,13 +6,10 @@ import Head from 'next/head';
 import Script from 'next/script';
 
 // Components
-import Verify from '../components/verify/Verify';
 import Connect from '../components/connect/Connect';
-import Mint from '../components/mint/Mint';
 
 function Home() {
-  const [isConnected, setIsConnected]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-  const [isHuman, setIsHuman]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+  const [isConnected, setIsConnected]: [string, Dispatch<SetStateAction<string>>] = useState('');
 
   return (
     <>
@@ -28,8 +25,6 @@ function Home() {
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
       <main className="container shadow rounded position-absolute top-50 start-50 translate-middle">
         <Connect isConnected={isConnected} setIsConnected={setIsConnected} />
-        <Verify isConnected={isConnected} isHuman={isHuman} setIsHuman={setIsHuman} />
-        <Mint isHuman={isHuman} />
       </main>
     </>
   );

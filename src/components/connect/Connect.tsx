@@ -1,7 +1,4 @@
-/* eslint-disable max-len */
-import React, {
-  Dispatch, SetStateAction,
-} from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { HashConnect, MessageTypes } from 'hashconnect';
 
 // Utils
@@ -13,9 +10,8 @@ import { IData } from '../../lib/types';
 // Constants
 import APP_METADATA from './connect.constants';
 
-function Connect({ isConnected, setIsConnected }: {
-  isConnected: boolean,
-  setIsConnected: Dispatch<SetStateAction<boolean>> }) {
+// eslint-disable-next-line max-len
+function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsConnected: Dispatch<SetStateAction<string>> }) {
   const hashconnect: HashConnect = new HashConnect();
 
   const connectWallet = (privKey: string, topic: string, pairingString: string) => {
@@ -27,7 +23,7 @@ function Connect({ isConnected, setIsConnected }: {
       };
 
       setItem('hashconnectData', JSON.stringify(data));
-      setIsConnected(true);
+      setIsConnected(accountIds[0]);
     });
   };
 
@@ -41,7 +37,7 @@ function Connect({ isConnected, setIsConnected }: {
       await hashconnect.init(APP_METADATA, hashconnectData.privKey);
       await hashconnect.connect(hashconnectData.topic, hashconnectData.metadata);
 
-      setIsConnected(true);
+      setIsConnected(hashconnectData.accountIds[0]);
     } else {
       const { privKey }: any = await hashconnect.init(APP_METADATA);
       const state: any = await hashconnect.connect();
@@ -53,17 +49,24 @@ function Connect({ isConnected, setIsConnected }: {
 
   return (
     <div className="my-4">
-      <div className="mb-2 d-flex justify-content-center fs-4 fw-bold">Step 1</div>
+      {/* <div className="mb-2 d-flex justify-content-center fs-4 fw-bold">Step 1</div> */}
       <div className="d-flex justify-content-center">
         <button
           type="button"
           className={(isConnected) ? 'btn btn-success' : 'btn btn-secondary'}
           onClick={(event) => connectLibrary(event)}
-          disabled={isConnected}
+          disabled={!!isConnected}
         >
           Connect wallet
         </button>
       </div>
+      {(isConnected) ? (
+        <div className="mb-2 d-flex justify-content-center">
+          Wallet ID:
+          {' '}
+          {isConnected}
+        </div>
+      ) : null}
     </div>
   );
 }
