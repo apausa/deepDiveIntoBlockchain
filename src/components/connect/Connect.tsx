@@ -10,8 +10,9 @@ import { IData } from '../../lib/types';
 // Constants
 import APP_METADATA from '../../lib/constants.ts';
 
-// eslint-disable-next-line max-len
-function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsConnected: Dispatch<SetStateAction<string>> }) {
+function Connect({ isConnected, setIsConnected }: {
+  isConnected: string, setIsConnected: Dispatch<SetStateAction<string>>
+}) {
   const hashconnect: HashConnect = new HashConnect();
 
   const connectWallet = (privKey: string, topic: string, pairingString: string) => {
@@ -51,6 +52,7 @@ function Connect({ isConnected, setIsConnected }: { isConnected: string, setIsCo
 
   return (
     <div className="my-4">
+      <div className="mb-2 d-flex justify-content-center">Testnet</div>
       <div className="d-flex justify-content-center">
         <button
           type="button"
