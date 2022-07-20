@@ -29,11 +29,7 @@ function Home() {
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
       <main className="position-absolute top-50 start-50 translate-middle">
         <div className="pb-5 d-flex justify-content-center">
-          Please, associate token ID
-          {' '}
-          <div className="fw-bold">0.0.47712691</div>
-          {' '}
-          before minting
+          Please, associate token ID 0.0.47712691 before minting
         </div>
         {(!isConnected) ? <Connect setIsConnected={setIsConnected} /> : null}
         {(isConnected && !isHuman) ? (<Verify setIsHuman={setIsHuman} />) : null}
