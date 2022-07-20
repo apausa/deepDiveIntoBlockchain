@@ -24,7 +24,6 @@ export default async function handler(req, res) {
 
       const isOwned = (!!balanceCheckTx.tokens._map.get(tokenId.toString()));
 
-      console.log(isOwned, 'isOwned');
       res.status(201).json({ success: true, isOwned });
     } catch (error) {
       res.status(400).json({ success: false, error });
