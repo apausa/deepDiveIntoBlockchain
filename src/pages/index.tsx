@@ -22,9 +22,7 @@ function Home() {
     setIsMinted(isOwned);
   };
 
-  useEffect(() => {
-    checkIsOwned();
-  }, []);
+  useEffect(() => { checkIsOwned(); }, [isConnected]);
 
   return (
     <>
