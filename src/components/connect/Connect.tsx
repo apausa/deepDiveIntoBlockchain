@@ -34,8 +34,7 @@ function Connect({ setIsConnected }: {
     const hashconnectRawData: string | null = await getItem('hashconnectData');
 
     if (hashconnectRawData) {
-      const hashconnectParsedRawData: string = await JSON.parse(hashconnectRawData);
-      const hashconnectData: IData = await JSON.parse(hashconnectParsedRawData);
+      const hashconnectData: IData = await JSON.parse(hashconnectRawData);
 
       await hashconnect.init(APP_METADATA, hashconnectData.privKey);
       await hashconnect.connect(hashconnectData.topic, hashconnectData.metadata);
