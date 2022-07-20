@@ -23,8 +23,6 @@ export default async function handler(req, res) {
         .execute(client);
 
       const isOwned = (!!balanceCheckTx.tokens._map.get(tokenId.toString()));
-      console.log(clientId);
-      console.log(balanceCheckTx.tokens._map.get(tokenId.toString()));
       res.status(201).json({ success: true, isOwned });
     } catch (error) {
       res.status(400).json({ success: false, error });
