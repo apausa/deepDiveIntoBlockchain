@@ -38,12 +38,12 @@ async function mintNft(tokenId, account) {
 export default async function mintAndTransferNft(userId) {
   const clientId = AccountId.fromString(userId);
   console.log('1');
-  const accountId = AccountId.fromString(process.env.NEXT_PUBLIC_ACCOUNT_ID);
+  const accountId = AccountId.fromString(process.env.ACCOUNT_ID);
   console.log('2');
-  const privateKey = PrivateKey.fromString(process.env.NEXT_PUBLIC_PRIVATE_KEY);
+  const privateKey = PrivateKey.fromString(process.env.PRIVATE_KEY);
   const client = Client.forTestnet().setOperator(accountId, privateKey);
   const account = { accountId, privateKey, client };
-  const tokenId = TokenId.fromString(process.env.NEXT_PUBLIC_TOKEN_ID);
+  const tokenId = TokenId.fromString(process.env.TOKEN_ID);
 
   // @todo check if user already owns the token before minting
   // @todo check if user already has the token associated minting
