@@ -18,7 +18,7 @@ export async function mintNft() {
     // http://localhost:3000/api/mint
     const data = await axios.get('https://uzh.vercel.app/api/mint');
 
-    console.log('mintNft', data);
+    console.log('transferNft', data);
     return data.success;
   } catch {
     return false;

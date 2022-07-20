@@ -12,13 +12,13 @@ import Mint from '../components/mint/Mint';
 import { checkBalance } from '../components/mint/mint.service';
 
 function Home() {
-  const [isConnected, setIsConnected]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [isConnected, setIsConnected]: [string, Dispatch<SetStateAction<string>>] = useState('0.0.47696980');
   const [isHuman, setIsHuman]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
   const [isMinted, setIsMinted]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   const checkIsOwned = async () => {
     if (!isConnected) return;
-    console.log(isConnected);
+
     const isOwned = await checkBalance(isConnected);
 
     // @todo fix when there is an error is set as false
