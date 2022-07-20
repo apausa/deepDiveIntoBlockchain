@@ -16,9 +16,10 @@ export async function mintNft() {
   try {
     // https://uzh.vercel.app/api/mint
     // http://localhost:3000/api/mint
-    const { success } = await axios.get('https://uzh.vercel.app/api/mint');
+    const data = await axios.get('https://uzh.vercel.app/api/mint');
 
-    return success;
+    console.log('mintNft', data);
+    return data.success;
   } catch {
     return false;
   }
@@ -28,9 +29,10 @@ export async function transferNft(isConnected) {
   try {
     // https://uzh.vercel.app/api/transfer
     // http://localhost:3000/api/transfer
-    const { success } = await axios.post('https://uzh.vercel.app/api/transfer', { isConnected });
+    const data = await axios.post('https://uzh.vercel.app/api/transfer', { isConnected });
 
-    return success;
+    console.log('transferNft', data);
+    return data.success;
   } catch {
     return false;
   }
