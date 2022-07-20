@@ -18,6 +18,7 @@ function Home() {
 
   const checkIsOwned = async () => {
     if (!isConnected) return;
+    console.log(isConnected);
     const isOwned = await checkBalance(isConnected);
 
     // @todo fix when there is an error is set as false
