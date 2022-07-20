@@ -17,12 +17,16 @@ function Home() {
   const [isMinted, setIsMinted]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   const checkIsOwned = async () => {
+    console.log(isConnected);
     const isOwned = await checkBalance(isConnected);
 
     setIsMinted(isOwned);
   };
 
-  useEffect(() => { checkIsOwned(); }, [isConnected]);
+  useEffect(() => {
+    if (!isConnected) return;
+    checkIsOwned();
+  }, [isConnected]);
 
   return (
     <>
