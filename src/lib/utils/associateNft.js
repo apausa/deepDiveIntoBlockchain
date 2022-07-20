@@ -10,7 +10,7 @@ const ACCOUNT_ID = AccountId.fromString(process.env.ACCOUNT_ID);
 const PRIVATE_KEY = PrivateKey.fromString(process.env.PRIVATE_KEY);
 const CLIENT_ID = AccountId.fromString(process.env.CLIENT_ID);
 const CLIENT_KEY = PrivateKey.fromString(process.env.CLIENT_KEY);
-const TOKEN_ID = TokenId.fromString('0.0.47705282');
+const TOKEN_ID = TokenId.fromString(process.env.TOKEN_ID);
 
 const client = Client.forTestnet().setOperator(ACCOUNT_ID, PRIVATE_KEY);
 

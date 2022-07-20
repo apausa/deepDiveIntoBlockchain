@@ -1,3 +1,4 @@
+import { AccountId, Client, PrivateKey } from '@hashgraph/sdk';
 import { HashConnectTypes } from 'hashconnect';
 
 export interface IResponse {
@@ -13,4 +14,10 @@ export interface IData {
   privKey: string,
   metadata: HashConnectTypes.WalletMetadata,
   accountIds: string[],
+}
+
+export interface IAccount {
+  accountId:AccountId,
+  privateKey:PrivateKey,
+  client:Client
 }

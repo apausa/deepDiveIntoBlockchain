@@ -17,7 +17,7 @@ const client = Client.forTestnet().setOperator(ACCOUNT_ID, PRIVATE_KEY);
 
 async function main() {
   const nftCreate = await new TokenCreateTransaction()
-    .setTokenName('authentication')
+    .setTokenName('Authentication')
     .setTokenSymbol('AUTH')
     .setTokenType(TokenType.NonFungibleUnique)
     .setDecimals(0)

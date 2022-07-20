@@ -7,9 +7,13 @@ import Script from 'next/script';
 
 // Components
 import Connect from '../components/connect/Connect';
+import Verify from '../components/verify/Verify';
+import Mint from '../components/mint/Mint';
 
 function Home() {
   const [isConnected, setIsConnected]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [isHuman, setIsHuman]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+  const [isMinted, setIsMinted]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
   return (
     <>
@@ -24,7 +28,17 @@ function Home() {
       </Head>
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
       <main className="position-absolute top-50 start-50 translate-middle">
-        <Connect isConnected={isConnected} setIsConnected={setIsConnected} />
+        <div className="pb-5 d-flex justify-content-center">
+          Please, associate token ID
+          {' '}
+          <div className="fw-bold">0.0.47712691</div>
+          {' '}
+          before minting
+        </div>
+        {(!isConnected) ? <Connect setIsConnected={setIsConnected} /> : null}
+        {(isConnected && !isHuman) ? (<Verify setIsHuman={setIsHuman} />) : null}
+        {(isHuman && !isMinted) ? (<Mint isConnected={isConnected} setIsMinted={setIsMinted} />) : null}
+        {(isMinted) ? (<div className="d-flex justify-content-center fw-bold">The NFT was minted, you are now verified!</div>) : null}
       </main>
     </>
   );

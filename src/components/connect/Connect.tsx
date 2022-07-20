@@ -10,8 +10,8 @@ import { IData } from '../../lib/types';
 // Constants
 import APP_METADATA from '../../lib/constants.ts';
 
-function Connect({ isConnected, setIsConnected }: {
-  isConnected: string, setIsConnected: Dispatch<SetStateAction<string>>
+function Connect({ setIsConnected }: {
+  setIsConnected: Dispatch<SetStateAction<string>>
 }) {
   const hashconnect: HashConnect = new HashConnect();
 
@@ -51,25 +51,17 @@ function Connect({ isConnected, setIsConnected }: {
   };
 
   return (
-    <div className="my-4">
-      <div className="mb-2 d-flex justify-content-center">Testnet</div>
+    <div className="first">
       <div className="d-flex justify-content-center">
         <button
           type="button"
-          className={(isConnected) ? 'btn btn-success' : 'btn btn-outline-primary'}
+          className="btn btn-outline-primary"
           onClick={(event) => connectLibrary(event)}
-          disabled={!!isConnected}
         >
           Connect with Hashpack wallet
         </button>
       </div>
-      {(isConnected) ? (
-        <div className="mt-4 d-flex justify-content-center fw-bold">
-          Wallet ID:
-          {' '}
-          {isConnected}
-        </div>
-      ) : null}
+      <div className="mt-4 d-flex justify-content-center fw-bold">Wallet disconnected</div>
     </div>
   );
 }
