@@ -12,7 +12,7 @@ import Mint from '../components/mint/Mint';
 import { checkBalance } from '../components/mint/mint.service';
 
 function Home() {
-  const [isConnected, setIsConnected]: [string, Dispatch<SetStateAction<string>>] = useState('0.0.47696980');
+  const [isConnected, setIsConnected]: [string, Dispatch<SetStateAction<string>>] = useState('');
   const [isHuman, setIsHuman]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
   const [isMinted, setIsMinted]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 

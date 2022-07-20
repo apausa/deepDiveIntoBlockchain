@@ -22,7 +22,9 @@ export default async function handler(req, res) {
         .setAccountId(clientId)
         .execute(client);
 
-      const isOwned = (!!balanceCheckTx.tokens._map.get(tokenId.toString()));
+      const number = `${balanceCheckTx.tokens._map.get(tokenId.toString())}`;
+      const isOwned = number !== '0';
+
       res.status(201).json({ success: true, isOwned });
     } catch (error) {
       res.status(400).json({ success: false, error });
