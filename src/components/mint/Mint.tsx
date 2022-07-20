@@ -1,5 +1,6 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import mintAndTransferNft from './mint.service';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import { checkBalance, mintNft, transferNft } from './mint.service';
 
 function Mint({ isConnected, setIsMinted }: {
   isConnected: string
@@ -8,9 +9,9 @@ function Mint({ isConnected, setIsMinted }: {
   const onSubmit = async (event: any) => {
     event.preventDefault();
 
-    const status: string = await mintAndTransferNft(isConnected);
-    console.log(status);
-    setIsMinted((status === 'SUCCESS'));
+    await mintNft();
+    const isTransfered = await transferNft(isConnected);
+    setIsMinted(isTransfered);
   };
 
   return (

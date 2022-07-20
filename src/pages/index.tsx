@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React, {
-  Dispatch, SetStateAction, useState,
+  Dispatch, SetStateAction, useEffect, useState,
 } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
@@ -9,11 +9,23 @@ import Script from 'next/script';
 import Connect from '../components/connect/Connect';
 import Verify from '../components/verify/Verify';
 import Mint from '../components/mint/Mint';
+import { checkBalance } from '../components/mint/mint.service';
 
 function Home() {
-  const [isConnected, setIsConnected]: [string, Dispatch<SetStateAction<string>>] = useState('');
+  const [isConnected, setIsConnected]: [string, Dispatch<SetStateAction<string>>] = useState('0.0.47715307');
   const [isHuman, setIsHuman]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
   const [isMinted, setIsMinted]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+
+  const checkIsOwned = async () => {
+    const isOwned = await checkBalance(isConnected);
+
+    console.log(isOwned);
+    setIsMinted(isOwned);
+  };
+
+  useEffect(() => {
+    checkIsOwned();
+  }, []);
 
   return (
     <>
@@ -28,13 +40,19 @@ function Home() {
       </Head>
       <Script src="https://www.google.com/recaptcha/api.js" async defer strategy="lazyOnload" />
       <main className="position-absolute top-50 start-50 translate-middle">
-        <div className="pb-5 d-flex justify-content-center">
-          Please, associate token ID 0.0.47712691 before minting
-        </div>
-        {(!isConnected) ? <Connect setIsConnected={setIsConnected} /> : null}
-        {(isConnected && !isHuman) ? (<Verify setIsHuman={setIsHuman} />) : null}
+        {(!isMinted) ? (
+          <div className="pb-5 d-flex justify-content-center">
+            Please, associate token ID 0.0.47712691 before minting
+          </div>
+        ) : null }
+        {(!isMinted && !isConnected) ? <Connect setIsConnected={setIsConnected} /> : null}
+        {(!isMinted && isConnected && !isHuman) ? (<Verify setIsHuman={setIsHuman} />) : null}
         {(isHuman && !isMinted) ? (<Mint isConnected={isConnected} setIsMinted={setIsMinted} />) : null}
-        {(isMinted) ? (<div className="d-flex justify-content-center fw-bold">The NFT was minted, you are now verified!</div>) : null}
+        {(isMinted) ? (
+          <div className="d-flex justify-content-center fw-bold">
+            The NFT was minted, you are now verified!
+          </div>
+        ) : null}
       </main>
     </>
   );

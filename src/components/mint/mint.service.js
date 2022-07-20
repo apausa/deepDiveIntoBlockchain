@@ -1,54 +1,39 @@
-import {
-  AccountId,
-  PrivateKey,
-  Client,
-  TokenMintTransaction,
-  TransferTransaction,
-  TokenId,
-} from '@hashgraph/sdk';
+import axios from 'axios';
 
-// eslint-disable-next-line max-len
-async function transferNft(clientId, tokenId, account) {
-  const { accountId, privateKey, client } = account;
-  const tokenTransferTx = await new TransferTransaction()
-    .addNftTransfer(tokenId, 1, accountId, clientId)
-    .freezeWith(client)
-    .sign(privateKey);
+export async function checkBalance(isConnected) {
+  try {
+    // https://uzh.vercel.app/api/balance
+    // http://localhost:3000/api/balance
+    const { data: { isOwned } } = await axios.post('https://uzh.vercel.app/api/balance', { isConnected });
 
-  const tokenTransferSubmit = await tokenTransferTx.execute(client);
-  const tokenTransferRx = await tokenTransferSubmit.getReceipt(client);
-
-  return `${tokenTransferRx.status}`;
+    return isOwned;
+  } catch (error) {
+    return error;
+  }
 }
 
-async function mintNft(tokenId, account) {
-  const { client, privateKey } = account;
-  const CID = ['QmTzWcVfk88JRqjTpVwHzBeULRTNzHY7mnBSG42CpwHmPa'];
+export async function mintNft() {
+  try {
+    // https://uzh.vercel.app/api/mint
+    // http://localhost:3000/api/mint
+    const data = await axios.get('https://uzh.vercel.app/api/mint');
 
-  const mintTx = await new TokenMintTransaction()
-    .setTokenId(tokenId)
-    .setMetadata([Buffer.from(CID)])
-    .freezeWith(client)
-    .sign(privateKey);
-
-  const mintTxSubmit = await mintTx.execute(client);
-  await mintTxSubmit.getReceipt(client);
+    console.log(data);
+    return data.success;
+  } catch (error) {
+    return error;
+  }
 }
 
-export default async function mintAndTransferNft(userId) {
-  const clientId = AccountId.fromString(userId);
-  console.log('1');
-  const accountId = AccountId.fromString(process.env.ACCOUNT_ID);
-  console.log('2');
-  const privateKey = PrivateKey.fromString(process.env.PRIVATE_KEY);
-  const client = Client.forTestnet().setOperator(accountId, privateKey);
-  const account = { accountId, privateKey, client };
-  const tokenId = TokenId.fromString(process.env.TOKEN_ID);
+export async function transferNft(isConnected) {
+  try {
+    // https://uzh.vercel.app/api/transfer
+    // http://localhost:3000/api/transfer
+    const data = await axios.post('https://uzh.vercel.app/api/transfer', { isConnected });
 
-  // @todo check if user already owns the token before minting
-  // @todo check if user already has the token associated minting
-  await mintNft(tokenId, account);
-  const status = await transferNft(clientId, tokenId, account);
-
-  return status;
+    console.log(data);
+    return data.success;
+  } catch (error) {
+    return error;
+  }
 }
