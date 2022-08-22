@@ -22,7 +22,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd uzh
 ```
 
 Install dependencies
@@ -61,12 +61,12 @@ Start the server
 - Smart contract to check account balance
 - Smart contract to mint a non fungible token
 - Smart contract to transfer a non fungible token
-- Connect wallet
-- 
+- Wallet connection
 
 ## Feedback
 
 If you have any feedback, please reach out to us at apausa@pablu.xyz
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
