@@ -1,48 +1,47 @@
+/* eslint-disable max-len */
 import React, { Dispatch, SetStateAction } from 'react';
-import { HashConnect, MessageTypes } from 'hashconnect';
+import { HashConnect, HashConnectTypes, MessageTypes } from 'hashconnect';
 
 // Utils
 import { getItem, setItem } from '../../lib/utils/localStorage';
 
 // Types
-import { IData } from '../../lib/types';
+import { IHashconnectData } from './connect.types';
 
 // Constants
-import APP_METADATA from '../../lib/constants.ts';
+import APP_METADATA from './connect.constants';
 
-function Connect({ setIsConnected }: {
-  setIsConnected: Dispatch<SetStateAction<string>>
-}) {
+function Connect({ setWalletId }: {
+  setWalletId: Dispatch<SetStateAction<string>>
+}): JSX.Element {
   const hashconnect: HashConnect = new HashConnect();
 
-  const connectWallet = (privKey: string, topic: string, pairingString: string) => {
+  const connectWallet = (privKey: string, topic: string, pairingString: string): void => {
     hashconnect.connectToLocalWallet(pairingString);
 
-    hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing) => {
-      const data: IData = {
+    hashconnect.pairingEvent.once(({ metadata, accountIds }: MessageTypes.ApprovePairing): void => {
+      const data: IHashconnectData = {
         privKey, topic, pairingString, metadata, accountIds,
       };
 
       setItem('hashconnectData', JSON.stringify(data));
-      setIsConnected(accountIds[0]);
+      setWalletId(accountIds[0]);
     });
   };
 
-  const connectLibrary = async (event: any) => {
+  const connectLibrary = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     event.preventDefault();
-
     const hashconnectRawData: string | null = await getItem('hashconnectData');
 
     if (hashconnectRawData) {
-      const hashconnectData: IData = await JSON.parse(hashconnectRawData);
-
+      const hashconnectData: IHashconnectData = await JSON.parse(hashconnectRawData);
       await hashconnect.init(APP_METADATA, hashconnectData.privKey);
       await hashconnect.connect(hashconnectData.topic, hashconnectData.metadata);
 
-      setIsConnected(hashconnectData.accountIds[0]);
+      setWalletId(hashconnectData.accountIds[0]);
     } else {
-      const { privKey }: any = await hashconnect.init(APP_METADATA);
-      const state: any = await hashconnect.connect();
+      const { privKey }: HashConnectTypes.InitilizationData = await hashconnect.init(APP_METADATA);
+      const state: HashConnectTypes.ConnectionState = await hashconnect.connect();
       const pairingString: string = hashconnect.generatePairingString(state, 'testnet', true);
 
       connectWallet(privKey, state.topic, pairingString);
@@ -55,7 +54,9 @@ function Connect({ setIsConnected }: {
         <button
           type="button"
           className="btn btn-outline-primary"
-          onClick={(event) => connectLibrary(event)}
+          onClick={(
+            event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          ): Promise<void> => connectLibrary(event)}
         >
           Connect with Hashpack wallet
         </button>

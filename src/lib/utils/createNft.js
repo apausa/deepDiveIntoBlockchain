@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 require('dotenv').config({ path: '../../../.env' });
 
 const {
@@ -10,28 +9,29 @@ const {
   TokenSupplyType,
 } = require('@hashgraph/sdk');
 
-const ACCOUNT_ID = AccountId.fromString(process.env.ACCOUNT_ID);
-const PRIVATE_KEY = PrivateKey.fromString(process.env.PRIVATE_KEY);
+const HEDERA_ACCOUNT_ID = AccountId.fromString(process.env.HEDERA_ACCOUNT_ID);
+const HEDERA_PRIVATE_KEY = PrivateKey.fromString(process.env.HEDERA_PRIVATE_KEY);
 
-const client = Client.forTestnet().setOperator(ACCOUNT_ID, PRIVATE_KEY);
+const client = Client.forTestnet().setOperator(HEDERA_ACCOUNT_ID, HEDERA_PRIVATE_KEY);
 
-async function main() {
+async function createNft() {
   const nftCreate = await new TokenCreateTransaction()
     .setTokenName('Authentication')
     .setTokenSymbol('AUTH')
     .setTokenType(TokenType.NonFungibleUnique)
     .setDecimals(0)
     .setInitialSupply(0)
-    .setTreasuryAccountId(ACCOUNT_ID)
+    .setTreasuryAccountId(HEDERA_ACCOUNT_ID)
     .setSupplyType(TokenSupplyType.Infinite)
-    .setSupplyKey(PRIVATE_KEY)
+    .setSupplyKey(HEDERA_PRIVATE_KEY)
     .freezeWith(client);
 
-  const nftCreateTxSign = await nftCreate.sign(PRIVATE_KEY);
+  const nftCreateTxSign = await nftCreate.sign(HEDERA_PRIVATE_KEY);
   const nftCreateSubmit = await nftCreateTxSign.execute(client);
   const { tokenId } = await nftCreateSubmit.getReceipt(client);
 
+  // eslint-disable-next-line no-console
   console.log(`- Created NFT with Token ID: ${tokenId} \n`);
 }
 
-main();
+createNft();

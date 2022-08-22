@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import { checkBalance, mintNft, transferNft } from './mint.service';
+import React, { Dispatch, SetStateAction } from 'react';
+import { mintNft, transferNft } from './mint.service';
 
-function Mint({ isConnected, setIsMinted }: {
-  isConnected: string
-  setIsMinted: Dispatch<SetStateAction<boolean>>,
-}) {
-  const onSubmit = async (event: any) => {
+function Mint({ walletId, setIsTransfered }: {
+  walletId: string
+  setIsTransfered: Dispatch<SetStateAction<boolean>>,
+}): JSX.Element {
+  const onSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ): Promise<void> => {
     event.preventDefault();
 
     await mintNft();
-    const isTransfered = await transferNft(isConnected);
-    setIsMinted(isTransfered);
+    const isTransfered = await transferNft(walletId);
+    if (isTransfered) setIsTransfered(isTransfered);
   };
 
   return (
@@ -19,7 +21,9 @@ function Mint({ isConnected, setIsMinted }: {
       <div className="d-flex justify-content-center">
         <button
           type="button"
-          onClick={(event) => onSubmit(event)}
+          onClick={(
+            event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          ): Promise<void> => onSubmit(event)}
           className="btn btn-outline-primary"
         >
           Mint token

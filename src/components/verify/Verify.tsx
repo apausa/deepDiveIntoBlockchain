@@ -1,9 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-function Verify({ setIsHuman }: {
-  setIsHuman: Dispatch<SetStateAction<boolean>>
-}) {
-  const onSubmit = (event: any): void => {
+function Verify({ setIsHuman }: { setIsHuman: Dispatch<SetStateAction<boolean>> }): JSX.Element {
+  const onSubmit: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void) = (event) => {
     event.preventDefault();
 
     setIsHuman(true);
@@ -14,7 +12,9 @@ function Verify({ setIsHuman }: {
       <div className="d-flex justify-content-center">
         <button
           type="button"
-          onClick={(event) => onSubmit(event)}
+          onClick={(
+            event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+          ): void => onSubmit(event)}
           className="btn btn-outline-primary"
         >
           Submit verfication
