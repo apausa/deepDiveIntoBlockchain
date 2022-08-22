@@ -28,10 +28,10 @@ function Home(): JSX.Element {
   return (
     <>
       <Head>
-        <title>UZH</title>
-        <meta name="description" content="Final project for UZH International Summer School, Deep Dive into Blockchain - Linking Economics, Technology and Law" />
-        <meta property="og:title" content="UZH" />
-        <meta property="og:description" content="Final project for UZH International Summer School, Deep Dive into Blockchain - Linking Economics, Technology and Law" />
+        <title>HederAuth</title>
+        <meta name="description" content="Final project for UZH International Summer Schools, Deep Dive into Blockchain - Linking Economics, Technology and Law; in collaboration with Hedera." />
+        <meta property="og:title" content="HederAuth" />
+        <meta property="og:description" content="Final project for UZH International Summer Schools, Deep Dive into Blockchain - Linking Economics, Technology and Law; in collaboration with Hedera." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://uzh.vercel.app/" />
         <link rel="icon" href="/favicon.ico" />
