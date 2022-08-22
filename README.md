@@ -1,7 +1,7 @@
 
 # Hederauth
 
-Final project for UZH International Summer Schools, Deep Dive into Blockchain – Linking Economics, Technology and Law; in collaboration with Hedera.
+Final project for UZH International Summer Schools, Deep Dive into Blockchain – Linking Economics, Technology and Law; supported by Hedera.
 
 
 ## Appendix

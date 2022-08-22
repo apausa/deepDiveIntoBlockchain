@@ -29,9 +29,9 @@ function Home(): JSX.Element {
     <>
       <Head>
         <title>HederAuth</title>
-        <meta name="description" content="Final project for UZH International Summer Schools, Deep Dive into Blockchain - Linking Economics, Technology and Law; in collaboration with Hedera." />
+        <meta name="description" content="Final project for UZH International Summer Schools, Deep Dive into Blockchain - Linking Economics, Technology and Law; supported by Hedera." />
         <meta property="og:title" content="HederAuth" />
-        <meta property="og:description" content="Final project for UZH International Summer Schools, Deep Dive into Blockchain - Linking Economics, Technology and Law; in collaboration with Hedera." />
+        <meta property="og:description" content="Final project for UZH International Summer Schools, Deep Dive into Blockchain - Linking Economics, Technology and Law; supported by Hedera." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://uzh.vercel.app/" />
         <link rel="icon" href="/favicon.ico" />
