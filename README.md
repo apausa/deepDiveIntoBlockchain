@@ -48,13 +48,6 @@ Start the server
 ```
 
 
-## Acknowledgements
-
- - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
-
-
 ## Features
 
 - Smart contract to create a non fungible token
@@ -62,14 +55,6 @@ Start the server
 - Smart contract to mint a non fungible token
 - Smart contract to transfer a non fungible token
 - Wallet connection
-
-## Feedback
-
-If you have any feedback, please reach out to us at apausa@pablu.xyz
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
 
 
 ## Screenshots
@@ -79,9 +64,9 @@ If you have any feedback, please reach out to us at apausa@pablu.xyz
 
 ## Tech Stack
 
-**Client:** React, Redux, TailwindCSS
+**Client:** React, Bootstrap and Hashconnect (to interact with the HashPack browser wallet).
 
-**Server:** Node, Express
+**Server:** Node and Hashgraph SDK (to interact with the Hedera blockchain).
 
 
 ## Usage/Examples
@@ -129,3 +114,18 @@ If you have any feedback, please reach out to us at apausa@pablu.xyz
 ```
 
 
+## Acknowledgements
+
+ - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
+ - [Awesome README](https://github.com/matiassingers/awesome-readme)
+ - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+## Feedback
+
+If you have any feedback, please reach out to us at apausa@pablu.xyz
