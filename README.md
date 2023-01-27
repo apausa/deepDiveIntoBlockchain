@@ -1,7 +1,7 @@
 
 # Hederauth
 
-Next.js and TypeScript application to verify Hedera's blockchain real users.
+Worked with a group of international students on a blockchain-based solution, supported by the Hedera team. Next.js and TypeScript application to verify Hedera's blockchain real users.
 
 ## Appendix
 
@@ -64,52 +64,6 @@ Start the server
 **Client:** React, Bootstrap and Hashconnect (to interact with the HashPack browser wallet).
 
 **Server:** Node and Hashgraph SDK (to interact with the Hedera blockchain).
-
-
-## Usage/Examples
-
-### Create token 
-
-```javascript
-  const nftCreate = await new TokenCreateTransaction()
-    .setTokenName('Authentication')
-    .setTokenSymbol('AUTH')
-    .setTokenType(TokenType.NonFungibleUnique)
-    .setDecimals(0)
-    .setInitialSupply(0)
-    .setTreasuryAccountId(HEDERA_ACCOUNT_ID)
-    .setSupplyType(TokenSupplyType.Infinite)
-    .setSupplyKey(HEDERA_PRIVATE_KEY)
-    .freezeWith(client);
-
-  const nftCreateTxSign = await nftCreate.sign(HEDERA_PRIVATE_KEY);
-  const nftCreateSubmit = await nftCreateTxSign.execute(client);
-  const { tokenId } = await nftCreateSubmit.getReceipt(client);
-```
-
-### Mint token
-
-```javascript
-    const mintTx: Transaction = await new TokenMintTransaction()
-      .setTokenId(tokenId)
-      .setMetadata([Buffer.from(CID)])
-      .freezeWith(client)
-      .sign(privateKey);
-    const mintTxSubmit: TransactionResponse = await mintTx.execute(client);
-    const receipt: TransactionReceipt = await mintTxSubmit.getReceipt(client);
-```
-
-### Transfer token 
-
-```javascript
-    const tokenTransferTx: Transaction = await new TransferTransaction()
-      .addNftTransfer(tokenId, 1, accountId, clientId)
-      .freezeWith(client)
-      .sign(privateKey);
-    const tokenTransferSubmit: TransactionResponse = await tokenTransferTx.execute(client);
-    const receipt: TransactionReceipt = await tokenTransferSubmit.getReceipt(client);
-```
-
 
 ## Acknowledgements
 
