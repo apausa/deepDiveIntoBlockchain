@@ -1,8 +1,7 @@
 
 # Hederauth
 
-Final project for UZH International Summer Schools, Deep Dive into Blockchain – Linking Economics, Technology and Law; supported by Hedera. Next.js and TypeScript application to verify Hedera's blockchain real users.
-
+Next.js and TypeScript application to verify Hedera's blockchain real users.
 
 ## Appendix
 
