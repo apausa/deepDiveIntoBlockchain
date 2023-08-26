@@ -1,8 +1,7 @@
 
 # Hederauth
 
-Worked with a group of international students on a blockchain-based solution supported by Hedera Hashgraph.
-This is a Next.js and Node.js application with TypeScritp to verify Hedera's blockchain real users.
+Collaborated with a team of international students on a blockchain-based solution supported by Hedera, to verify real users in its hashgraph consensus through a Next.js a node.js application with TypeScript. 
 
 ## Appendix
 
