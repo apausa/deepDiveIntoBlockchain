@@ -1,7 +1,7 @@
 
 # Hederauth
 
-Collaborated with a team of international students on a blockchain-based solution supported by Hedera to verify real users in its hashgraph consensus.
+Collaboration with a team of students on a blockchain-based solution supported by Hedera, to verify real users in its hashgraph consensus; as part of the UZH International Summer School.
 
 ## Appendix
 
